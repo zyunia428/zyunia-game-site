@@ -1,82 +1,151 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="theme-color" content="#ffffff" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-<title>じゅにあのゲーム置き場</title>
-<meta name="description" content="じゅにあが個人で作っているゲームの置き場です。ブラウザですぐ遊べるゲームと、開発中のゲームを載せています。" />
-<link rel="icon" href="zyunia-logo.svg" type="image/svg+xml" />
-<style>
-:root{--bg:#f7f7f4;--ink:#222420;--muted:#777b74;--line:#dfdfd8;--accent:#395c47;--panel:#fff;--max:1010px}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.85 -apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif}a{color:inherit;text-decoration:none}a:hover{color:var(--accent)}button{font:inherit}.wrap{max-width:var(--max);margin:auto;padding:0 30px}.header{border-bottom:1px solid var(--line);background:rgba(247,247,244,.96)}.top{display:flex;align-items:center;justify-content:space-between;min-height:98px;gap:24px}.brand{font-size:23px;letter-spacing:-.07em;font-weight:800;white-space:nowrap}.brand span{display:block;letter-spacing:.08em;font-size:10px;color:var(--muted);font-weight:600;margin-top:-5px}.nav{display:flex;gap:28px;align-items:center}.nav a{font-family:Arial,sans-serif;color:#6f716e;font-size:13px;position:relative;padding:12px 0}.nav a.active{color:var(--ink);font-weight:700}.nav a.active:after{content:"";position:absolute;height:2px;left:0;right:0;bottom:3px;background:#55725f}.container{padding-top:65px;padding-bottom:100px;min-height:calc(100vh - 165px)}.page{display:none;animation:appear .24s ease}.page.active{display:block}@keyframes appear{from{opacity:.2;transform:translateY(5px)}to{opacity:1;transform:none}}.eyebrow{font:700 11px/1.5 Arial,sans-serif;color:var(--accent);letter-spacing:.16em;text-transform:uppercase}.heading{font-size:37px;letter-spacing:-.05em;line-height:1.4;margin:8px 0 10px}.lead{color:var(--muted);font-size:14px;margin:0 0 39px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 26px}.game{display:block;min-width:0}.art{aspect-ratio:16/9;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden;background:#e5e9e1;border:1px solid #d9ddd7;border-radius:5px;transition:transform .2s,border-color .2s}.game:hover .art{transform:translateY(-2px);border-color:#8b9d8b}.art::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 7px,rgba(255,255,255,.02) 7px 8px)}.art .shape{width:58%;height:61%;position:absolute;filter:blur(.2px)}.art .mock{position:relative;z-index:1;text-align:center;color:#fff;font-weight:900;font-size:clamp(18px,3vw,31px);letter-spacing:.09em;text-shadow:0 3px 15px rgba(0,0,0,.55)}.art .mock small{display:block;font:600 10px Arial,sans-serif;letter-spacing:.35em;margin-top:7px;opacity:.8}.art.tower{background:radial-gradient(circle at 50% 110%,#8d91a4 0%,#3a455e 42%,#181f32 100%)}.tower .shape{background:linear-gradient(90deg,#212d3f 0 15%,#64748a 15% 23%,#263b51 23% 48%,#8b8c99 48% 56%,#1b283e 56% 100%);clip-path:polygon(20% 100%,20% 35%,35% 35%,35% 6%,65% 6%,65% 35%,79% 35%,79% 100%)}.art.loot{background:radial-gradient(circle at center,#977a3e,#513e2c 58%,#242a27 100%)}.loot .shape{background:radial-gradient(circle,#e5d59a 0 4%,transparent 5%),linear-gradient(130deg,transparent 35%,#bfad6a 35% 42%,#5e4b32 42% 47%,transparent 47%),linear-gradient(20deg,transparent 40%,#d0a14a 40% 53%,#78502b 53% 58%,transparent 58%);transform:rotate(-17deg)}.art.soccer{background:linear-gradient(165deg,#a5d6cd 0 25%,#5c9b8b 25% 50%,#2d655b 50% 100%)}.soccer .shape{border:4px solid rgba(255,255,255,.5);width:65%;height:80%;border-radius:50%;transform:rotate(-12deg)}.art.chaos{background:radial-gradient(circle,#806f96,#302b46 60%,#211e31)}.chaos .shape{background:radial-gradient(circle at 50% 50%,#f3c865 0 15%,transparent 17%),conic-gradient(from 20deg,#e87d81 0 15%,transparent 15% 26%,#7e9bd4 26% 43%,transparent 43% 58%,#d0cc7d 58% 73%,transparent 73% 85%,#8daf96 85%);clip-path:polygon(50% 0,70% 25%,100% 20%,83% 52%,100% 83%,61% 75%,50% 100%,32% 75%,0 84%,19% 51%,0 16%,32% 25%)}.art.more{background:#eceee8;color:#94a094}.more .mock{color:#8c9488;text-shadow:none;font-size:38px}.title-line{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:12px}.game h3{font-size:16px;margin:0;font-weight:700}.status{color:var(--muted);font-size:11px;white-space:nowrap}.desc{font-size:13px;color:var(--muted);margin:2px 0 0}.content{max-width:720px}.section{margin-bottom:43px}.section h2{font-size:17px;margin:0 0 14px;letter-spacing:-.025em}.section p{margin:0 0 13px;color:#555b54}.rules{padding-left:19px;color:#555b54}.rules li{margin:8px 0}.history{display:grid;grid-template-columns:68px 1fr;gap:7px 15px;margin:14px 0}.history dt{color:var(--muted);font-size:13px}.history dd{margin:0;font-size:14px}.links{display:grid;max-width:560px;grid-template-columns:1fr 1fr;gap:12px}.links a{display:flex;justify-content:space-between;padding:14px 17px;background:#fff;border:1px solid var(--line);border-radius:4px;font-weight:600}.links a span{color:var(--muted)}.note{font-size:12px;color:var(--muted)!important}.footer{border-top:1px solid var(--line);padding:24px 0 35px;font-size:12px;color:#91948f;display:flex;justify-content:space-between}.return{display:inline-block;color:var(--accent);font-size:13px;border-bottom:1px solid #aebfb1;cursor:pointer;margin-top:27px}.detail-preview{border:1px solid var(--line);padding:27px;background:#fff;border-radius:6px;margin-top:26px}.detail-preview h2{margin:0 0 5px;font-size:23px}.detail-preview p{color:#686f67;font-size:13px;margin:5px 0}.fakebutton{display:inline-block;padding:9px 15px;border:1px solid var(--line);border-radius:4px;font-weight:600;font-size:12px;margin-top:15px}.fakebutton:hover{background:#f5f7f4}.mobile-nav{display:none}@media(max-width:730px){.wrap{padding:0 20px}.top{display:block;padding-top:22px;min-height:0}.brand{font-size:21px}.nav{gap:22px;overflow:auto;padding:13px 0 9px;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.nav a{font-size:12px;flex-shrink:0}.container{padding-top:38px;padding-bottom:65px}.heading{font-size:31px}.grid{gap:28px 13px}.game h3{font-size:14px}.status{font-size:10px}.title-line{display:block}.art .mock{font-size:16px}.art .mock small{font-size:7px}.lead{margin-bottom:25px}.footer{padding-bottom:25px}.links{grid-template-columns:1fr}}
-
-/* Single-page layout */
-.container{min-height:0;padding-top:56px;padding-bottom:90px}
-.page{display:block;animation:none;scroll-margin-top:28px}
-.page:not(#games):not(#detail){border-top:1px solid var(--line);margin-top:78px;padding-top:68px}
-.header{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)}
-.page{scroll-margin-top:145px}
-@media(max-width:730px){.page:not(#games):not(#detail){margin-top:54px;padding-top:42px}.page{scroll-margin-top:120px}.container{padding-top:38px}}
-
-/* Clean white and gentle monochrome theme */
-:root{--bg:#ffffff;--ink:#292929;--muted:#707070;--line:#e5e5e2;--accent:#383838;--panel:#fff}
-body{background:var(--bg);color:var(--ink);font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-size:14px;line-height:1.9;-webkit-font-smoothing:antialiased}
-.header{background:rgba(255,255,255,.96)}
-.brand{font-weight:800;letter-spacing:-.055em}
-.brand span,.eyebrow,.nav a{font-family:"Noto Sans JP",sans-serif}
-.nav a{color:#777}.nav a.active:after{background:#424242}
-.eyebrow{color:#777;letter-spacing:.13em}
-.heading{font-weight:700;letter-spacing:-.045em}
-.lead,.desc,.status,.note{color:#777}
-.section p,.rules{color:#535353}
-.links a{background:#fff;border-color:var(--line)}
-.links a:hover,.fakebutton:hover{background:#f7f7f7}
-.art{border-color:#e5e5e2}
-.game:hover .art{border-color:#999}
-.art.more{background:#f5f5f5}
-.return{border-bottom-color:#aaa}
-:focus-visible{outline:2px solid #555;outline-offset:4px}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.art{transition:none}}
-.brand{display:flex;align-items:center;gap:12px}.brand-logo{display:block;width:64px;height:64px;object-fit:contain}.brand .brand-text{display:block;font-size:23px;letter-spacing:-.07em;color:var(--ink);font-weight:800;margin:0}.brand .brand-text span{font-size:10px;color:var(--muted);letter-spacing:.08em;margin-top:-5px}@media(max-width:730px){.brand-logo{width:54px;height:54px}.brand .brand-text{font-size:21px}}
-.art img{display:block;width:100%;height:100%;object-fit:cover}
-div.game:hover .art{transform:none;border-color:#e5e5e2}
-.status.play{display:inline-flex;align-items:center;gap:5px;padding:1px 10px;border-radius:99px;background:#383838;color:#fff;font-weight:600}
-.status.play i{font-size:8px}
-a.game:hover .art{box-shadow:0 6px 18px rgba(0,0,0,.14)}
-a.game:hover h3{text-decoration:underline;text-underline-offset:3px}
-.links a .lnk{display:inline-flex;align-items:center;gap:10px;color:inherit}
-.links a .lnk i{color:#555}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>じゅにあのゲーム置き場</title>
+  <meta name="description" content="じゅにあが個人で作っているゲームの置き場です。ブラウザですぐ遊べるゲームと、開発中のゲームを載せています。">
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="js/main.js" defer></script>
 </head>
 <body>
-<header class="header"><div class="wrap top"><a class="brand" href="#games"><img class="brand-logo" src="zyunia-logo.svg" alt=""><span class="brand-text">じゅにあのゲーム置き場</span></a><nav class="nav" aria-label="メインメニュー"><a href="#games" data-page="games">ゲーム</a><a href="#support" data-page="support">投げ銭</a><a href="#guidelines" data-page="guidelines">ガイドライン</a><a href="#about" data-page="about">自己紹介</a><a href="#links" data-page="links">リンク</a><a href="#contact" data-page="contact">お問い合わせ</a></nav></div></header>
-<main class="wrap container">
-<section id="games" class="page"><h1 class="heading">ゲーム</h1><p class="lead">作ったゲームや、開発しているゲームを置いています。</p><div class="grid">
-<a class="game" href="https://gamerush.jp/g/yJ9JFMc" target="_blank" rel="noopener noreferrer"><div class="art"><img src="ikareta.webp" alt="イカレタイレブン"></div><div class="title-line"><h3>イカレタイレブン</h3><span class="status play"><i class="fa-solid fa-play" aria-hidden="true"></i>遊ぶ</span></div><p class="desc">ローグライク × サッカー。</p></a>
-<a class="game" href="https://gamerush.jp/g/gGlyAV8" target="_blank" rel="noopener noreferrer"><div class="art chaos"><img src="one-shot-chaos.webp" alt="ONE SHOT CHAOS"></div><div class="title-line"><h3>ONE SHOT CHAOS</h3><span class="status play"><i class="fa-solid fa-play" aria-hidden="true"></i>遊ぶ</span></div><p class="desc">シンプルな操作で楽しむカオスなゲーム。</p></a>
-<a class="game" href="https://gamerush.jp/g/GZwhcbc" target="_blank" rel="noopener noreferrer"><div class="art"><img src="60-survivor.webp" alt="60秒無双サバイバー"></div><div class="title-line"><h3>60秒無双サバイバー</h3><span class="status play"><i class="fa-solid fa-play" aria-hidden="true"></i>遊ぶ</span></div><p class="desc">60秒で最強を目指すサバイバーゲーム。</p></a>
-<div class="game"><div class="art"><img src="tower.png" alt="忘却の塔"></div><div class="title-line"><h3>忘却の塔</h3><span class="status">開発中</span></div><p class="desc">記憶をテーマにした、見下ろし型アクション。</p></div>
-<div class="game"><div class="art"><img src="hakusura.png" alt="ハクスラでいいんだよ"></div><div class="title-line"><h3>ハクスラでいいんだよ</h3><span class="status">開発中</span></div><p class="desc">戦って、拾って、強くなる。王道ハクスラ。</p></div>
-</div></section>
-<section id="support" class="page"><h1 class="heading">投げ銭</h1><div class="content"><p>ゲームは無料で公開しています。気に入ってもらえたら、投げ銭で応援してもらえるとうれしいです。</p><div class="links"><a href="https://ofuse.me/zyuniazyunia" target="_blank" rel="noopener noreferrer"><span class="lnk"><i class="fa-solid fa-heart fa-fw" aria-hidden="true"></i>OFUSE で投げ銭する</span> <span>↗</span></a></div></div></section>
-<section id="guidelines" class="page"><h1 class="heading">ガイドライン</h1><p class="lead">すべてのゲームに適用されます。</p><div class="content">
-<div class="section"><h2>実況・配信・動画投稿</h2><p>個人・法人を問わず、事前連絡なしで自由に行えます。ネタバレやエンディングの公開、広告・投げ銭などによる収益化も可能です。</p><p>概要欄などに、無料ゲームはゲームのURL、有料ゲームはストアのURLを載せてもらえるとうれしいです。ネタバレを含む場合は、その旨を記載してもらえると助かります。</p></div>
-<div class="section"><h2>二次創作</h2><p>ファンアートや動画などの二次創作を歓迎します。個人の同人活動の範囲であれば、同人誌やグッズの有償頒布も可能です。</p><p>企業による利用や同人活動の範囲を超える商用利用は、事前にお問い合わせください。</p></div>
-<div class="section"><h2>お願い</h2><ul class="rules"><li>ゲーム本体や素材の再配布はしないでください。</li><li>公式と誤認される表現や、他者を傷つける目的・違法な目的での利用はお控えください。</li><li>第三者の権利や、ゲーム内で使われている第三者素材の利用条件を守ってください。</li></ul><p>判断に迷う場合はお問い合わせください。ガイドラインは必要に応じて変更することがあります。</p></div></div></section>
-<section id="about" class="page"><h1 class="heading">自己紹介</h1><p class="lead">じゅにあ / Zyunia</p><div class="content"><div class="section"><p>じゅにあです。個人でゲームを作っています。ゲームの話がきっかけで初めて友達ができたので、人と人が仲良くなれるゲームを作りたいと思っています。仕事では企画、IT コンサル、IT エンジニアの経験が少しあります。e スポーツのコーチもしています。</p></div><div class="section"><h2>経歴・実績</h2><dl class="history"><dt>2026</dt><dd>STAGE:0 LoL部門 全国ベスト4（指導チーム）</dd><dt>2021</dt><dd>STAGE:0 LoL部門 全国優勝（選手）</dd><dt>2020</dt><dd>全国高校eスポーツ選手権 LoL部門 全国ベスト4（選手）</dd></dl></div></div></section>
-<section id="links" class="page"><h1 class="heading">リンク</h1><p class="lead">SNSや作品公開先など。</p><div class="links"><a href="https://x.com/zyunizyunia" target="_blank" rel="noopener noreferrer"><span class="lnk"><i class="fa-brands fa-x-twitter fa-fw" aria-hidden="true"></i>X</span> <span>↗</span></a><a href="https://gamerush.jp/u/zyunizyunia" target="_blank" rel="noopener noreferrer"><span class="lnk"><i class="fa-solid fa-gamepad fa-fw" aria-hidden="true"></i>GameRush</span> <span>↗</span></a><a href="https://www.youtube.com/@zyunizyunia" target="_blank" rel="noopener noreferrer"><span class="lnk"><i class="fa-brands fa-youtube fa-fw" aria-hidden="true"></i>YouTube</span> <span>↗</span></a><a href="https://github.com/zyunia428" target="_blank" rel="noopener noreferrer"><span class="lnk"><i class="fa-brands fa-github fa-fw" aria-hidden="true"></i>GitHub</span> <span>↗</span></a><a href="https://ofuse.me/zyuniazyunia" target="_blank" rel="noopener noreferrer"><span class="lnk"><i class="fa-solid fa-heart fa-fw" aria-hidden="true"></i>OFUSE</span> <span>↗</span></a></div></section>
-<section id="contact" class="page"><h1 class="heading">お問い合わせ</h1><p class="lead">ご連絡はメールでお願いします。</p><div class="content"><p><a href="mailto:zyuniagamedev@gmail.com">zyuniagamedev@gmail.com</a></p></div></section>
-</main><footer class="footer wrap"><span>© ZYUNIA Studio</span><span>じゅにあのゲーム置き場</span></footer>
-<script>
-const sections=['games','support','guidelines','about','links','contact'];
-function updateActive(id){document.querySelectorAll('.nav a').forEach(a=>{const active=a.dataset.page===id;a.classList.toggle('active',active);if(active)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')})}
-const observer=new IntersectionObserver(entries=>{const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio);if(visible.length)updateActive(visible[0].target.id)},{rootMargin:'-145px 0px -48% 0px',threshold:[0,.1,.5]});
-sections.forEach(id=>observer.observe(document.getElementById(id)));
-updateActive(sections.includes(location.hash.slice(1))?location.hash.slice(1):'games');
-</script>
+  <header class="header" id="header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#games">
+        <img class="brand-logo" src="img/zyunia-logo.svg" alt="" width="56" height="56">
+        <span class="brand-text">じゅにあのゲーム置き場</span>
+      </a>
+      <nav class="nav" id="nav" aria-label="メインメニュー">
+        <a href="#games">ゲーム</a>
+        <a href="#support">投げ銭</a>
+        <a href="#guidelines">ガイドライン</a>
+        <a href="#about">自己紹介</a>
+        <a href="#links">リンク</a>
+        <a href="#contact">お問い合わせ</a>
+        <span class="nav-indicator" id="nav-indicator" aria-hidden="true"></span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap main">
+    <section id="games" class="page">
+      <h1 class="heading reveal">ゲーム</h1>
+      <p class="lead reveal">作ったゲームや、開発しているゲームを置いています。</p>
+      <div class="grid">
+        <a class="game reveal" href="https://gamerush.jp/g/yJ9JFMc" target="_blank" rel="noopener noreferrer">
+          <div class="art"><img src="img/ikareta.webp" alt="イカレタイレブン" width="720" height="405" fetchpriority="high"></div>
+          <div class="title-line"><h3>イカレタイレブン</h3><span class="status play"><i class="icon icon-play" aria-hidden="true"></i>遊ぶ</span></div>
+          <p class="desc">ローグライク × サッカー。</p>
+        </a>
+        <a class="game reveal" href="https://gamerush.jp/g/gGlyAV8" target="_blank" rel="noopener noreferrer">
+          <div class="art"><img src="img/one-shot-chaos.webp" alt="ONE SHOT CHAOS" width="720" height="405"></div>
+          <div class="title-line"><h3>ONE SHOT CHAOS</h3><span class="status play"><i class="icon icon-play" aria-hidden="true"></i>遊ぶ</span></div>
+          <p class="desc">シンプルな操作で楽しむカオスなゲーム。</p>
+        </a>
+        <a class="game reveal" href="https://gamerush.jp/g/GZwhcbc" target="_blank" rel="noopener noreferrer">
+          <div class="art"><img src="img/60-survivor.webp" alt="60秒無双サバイバー" width="720" height="405" loading="lazy" decoding="async"></div>
+          <div class="title-line"><h3>60秒無双サバイバー</h3><span class="status play"><i class="icon icon-play" aria-hidden="true"></i>遊ぶ</span></div>
+          <p class="desc">60秒で最強を目指すサバイバーゲーム。</p>
+        </a>
+        <div class="game reveal">
+          <div class="art"><img src="img/tower.webp" alt="忘却の塔" width="960" height="540" loading="lazy" decoding="async"></div>
+          <div class="title-line"><h3>忘却の塔</h3><span class="status">開発中</span></div>
+          <p class="desc">記憶をテーマにした、見下ろし型アクション。</p>
+        </div>
+        <div class="game reveal">
+          <div class="art"><img src="img/hakusura.webp" alt="ハクスラでいいんだよ" width="960" height="540" loading="lazy" decoding="async"></div>
+          <div class="title-line"><h3>ハクスラでいいんだよ</h3><span class="status">開発中</span></div>
+          <p class="desc">戦って、拾って、強くなる。王道ハクスラ。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="support" class="page">
+      <h2 class="heading reveal">投げ銭</h2>
+      <div class="content reveal">
+        <p>ゲームは無料で公開しています。気に入ってもらえたら、投げ銭で応援してもらえるとうれしいです。</p>
+        <div class="links">
+          <a href="https://ofuse.me/zyuniazyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-heart" aria-hidden="true"></i>OFUSE で投げ銭する</span><span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="guidelines" class="page">
+      <h2 class="heading reveal">ガイドライン</h2>
+      <p class="lead reveal">すべてのゲームに適用されます。</p>
+      <div class="content">
+        <div class="section reveal">
+          <h3>実況・配信・動画投稿</h3>
+          <p>個人・法人を問わず、事前連絡なしで自由に行えます。ネタバレやエンディングの公開、広告・投げ銭などによる収益化も可能です。</p>
+          <p>概要欄などに、無料ゲームはゲームのURL、有料ゲームはストアのURLを載せてもらえるとうれしいです。ネタバレを含む場合は、その旨を記載してもらえると助かります。</p>
+        </div>
+        <div class="section reveal">
+          <h3>二次創作</h3>
+          <p>ファンアートや動画などの二次創作を歓迎します。個人の同人活動の範囲であれば、同人誌やグッズの有償頒布も可能です。</p>
+          <p>企業による利用や同人活動の範囲を超える商用利用は、事前にお問い合わせください。</p>
+        </div>
+        <div class="section reveal">
+          <h3>お願い</h3>
+          <ul class="rules">
+            <li>ゲーム本体や素材の再配布はしないでください。</li>
+            <li>公式と誤認される表現や、他者を傷つける目的・違法な目的での利用はお控えください。</li>
+            <li>第三者の権利や、ゲーム内で使われている第三者素材の利用条件を守ってください。</li>
+          </ul>
+          <p>判断に迷う場合はお問い合わせください。ガイドラインは必要に応じて変更することがあります。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="page">
+      <h2 class="heading reveal">自己紹介</h2>
+      <p class="lead reveal">じゅにあ / Zyunia</p>
+      <div class="content">
+        <div class="section reveal">
+          <p>じゅにあです。個人でゲームを作っています。ゲームの話がきっかけで初めて友達ができたので、人と人が仲良くなれるゲームを作りたいと思っています。仕事では企画、IT コンサル、IT エンジニアの経験が少しあります。e スポーツのコーチもしています。</p>
+        </div>
+        <div class="section reveal">
+          <h3>経歴・実績</h3>
+          <dl class="history">
+            <dt>2026</dt><dd>STAGE:0 LoL部門 全国ベスト4（指導チーム）</dd>
+            <dt>2021</dt><dd>STAGE:0 LoL部門 全国優勝（選手）</dd>
+            <dt>2020</dt><dd>全国高校eスポーツ選手権 LoL部門 全国ベスト4（選手）</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section id="links" class="page">
+      <h2 class="heading reveal">リンク</h2>
+      <p class="lead reveal">SNSや作品公開先など。</p>
+      <div class="links reveal">
+        <a href="https://x.com/zyunizyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-x" aria-hidden="true"></i>X</span><span class="arrow">↗</span></a>
+        <a href="https://gamerush.jp/u/zyunizyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-gamepad" aria-hidden="true"></i>GameRush</span><span class="arrow">↗</span></a>
+        <a href="https://www.youtube.com/@zyunizyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-youtube" aria-hidden="true"></i>YouTube</span><span class="arrow">↗</span></a>
+        <a href="https://github.com/zyunia428" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-github" aria-hidden="true"></i>GitHub</span><span class="arrow">↗</span></a>
+        <a href="https://ofuse.me/zyuniazyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-heart" aria-hidden="true"></i>OFUSE</span><span class="arrow">↗</span></a>
+      </div>
+    </section>
+
+    <section id="contact" class="page">
+      <h2 class="heading reveal">お問い合わせ</h2>
+      <p class="lead reveal">X の DM か、メールでご連絡ください。</p>
+      <div class="links reveal">
+        <a href="https://x.com/zyunizyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-x" aria-hidden="true"></i>X の DM</span><span class="arrow">↗</span></a>
+        <a href="mailto:zyuniagamedev@gmail.com"><span class="link-label"><i class="icon icon-mail" aria-hidden="true"></i>zyuniagamedev@gmail.com</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <span>© ZyuniaStudio</span>
+    <span>じゅにあのゲーム置き場</span>
+  </footer>
 </body>
 </html>
