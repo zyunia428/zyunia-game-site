@@ -1,5 +1,5 @@
 /* Icon font: subset of Font Awesome Free 6.5.2 (fontawesome.com, SIL OFL 1.1) */
-@font-face { font-family: "Icons Solid"; src: url("../fonts/icons-solid.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Icons Solid"; src: url("../fonts/icons-solid.woff2?v=2") format("woff2"); font-display: block; }
 @font-face { font-family: "Icons Brands"; src: url("../fonts/icons-brands.woff2") format("woff2"); font-display: block; }
 
 :root {
