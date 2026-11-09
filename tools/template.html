@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="{{htmlLang}}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>{{siteName}}</title>
+  <meta name="description" content="{{metaDescription}}">
+  <link rel="canonical" href="{{canonical}}">
+{{hreflang}}
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={{fontFamily}}:wght@400;700&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="/js/main.js" defer></script>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#games">
+        <img class="brand-logo" src="/img/zyunia-logo.svg" alt="" width="56" height="56">
+        <span class="brand-text">{{siteName}}</span>
+      </a>
+      <nav class="nav" id="nav" aria-label="{{navLabel}}">
+        <a href="#games">{{navGames}}</a>
+        <a href="#support">{{navSupport}}</a>
+        <a href="#guidelines">{{navGuidelines}}</a>
+        <a href="#about">{{navAbout}}</a>
+        <a href="#links">{{navLinks}}</a>
+        <a href="#contact">{{navContact}}</a>
+        <span class="nav-indicator" id="nav-indicator" aria-hidden="true"></span>
+      </nav>
+      <details class="lang" id="lang">
+        <summary aria-label="{{langLabel}}"><i class="icon icon-globe" aria-hidden="true"></i>{{langShort}}</summary>
+        <div class="lang-menu">
+{{langLinks}}
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main class="wrap main">
+    <section id="games" class="page">
+      <h1 class="heading reveal">{{gamesHeading}}</h1>
+      <p class="lead reveal">{{gamesLead}}</p>
+      <div class="grid">
+        <a class="game reveal" href="https://gamerush.jp/g/yJ9JFMc" target="_blank" rel="noopener noreferrer">
+          <div class="art"><img src="/img/ikareta.webp" alt="イカレタイレブン" width="720" height="405" fetchpriority="high"></div>
+          <div class="title-line"><h3>イカレタイレブン</h3><span class="status play"><i class="icon icon-play" aria-hidden="true"></i>{{play}}</span></div>
+          <p class="desc">{{descSoccer}}</p>
+        </a>
+        <a class="game reveal" href="https://gamerush.jp/g/gGlyAV8" target="_blank" rel="noopener noreferrer">
+          <div class="art"><img src="/img/one-shot-chaos.webp" alt="ONE SHOT CHAOS" width="720" height="405"></div>
+          <div class="title-line"><h3>ONE SHOT CHAOS</h3><span class="status play"><i class="icon icon-play" aria-hidden="true"></i>{{play}}</span></div>
+          <p class="desc">{{descChaos}}</p>
+        </a>
+        <a class="game reveal" href="https://gamerush.jp/g/GZwhcbc" target="_blank" rel="noopener noreferrer">
+          <div class="art"><img src="/img/60-survivor.webp" alt="60秒無双サバイバー" width="720" height="405" loading="lazy" decoding="async"></div>
+          <div class="title-line"><h3>60秒無双サバイバー</h3><span class="status play"><i class="icon icon-play" aria-hidden="true"></i>{{play}}</span></div>
+          <p class="desc">{{descSurvivor}}</p>
+        </a>
+        <div class="game reveal">
+          <div class="art"><img src="/img/tower.webp" alt="忘却の塔" width="960" height="540" loading="lazy" decoding="async"></div>
+          <div class="title-line"><h3>忘却の塔</h3><span class="status">{{inDevelopment}}</span></div>
+          <p class="desc">{{descTower}}</p>
+        </div>
+        <div class="game reveal">
+          <div class="art"><img src="/img/hakusura.webp" alt="ハクスラでいいんだよ" width="960" height="540" loading="lazy" decoding="async"></div>
+          <div class="title-line"><h3>ハクスラでいいんだよ</h3><span class="status">{{inDevelopment}}</span></div>
+          <p class="desc">{{descLoot}}</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="support" class="page">
+      <h2 class="heading reveal">{{navSupport}}</h2>
+      <div class="content reveal">
+        <p>{{support1}}</p>
+        <p>{{support2}}</p>
+        <p>{{support3}}</p>
+        <div class="links">
+          <a href="https://x.com/zyunizyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-x" aria-hidden="true"></i>{{followX}}</span><span class="arrow">↗</span></a>
+          <a href="https://gamerush.jp/u/zyunizyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-gamepad" aria-hidden="true"></i>GameRush</span><span class="arrow">↗</span></a>
+          <a href="https://ofuse.me/zyuniazyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-heart" aria-hidden="true"></i>{{tipOfuse}}</span><span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="guidelines" class="page">
+      <h2 class="heading reveal">{{navGuidelines}}</h2>
+      <p class="lead reveal">{{guidelinesLead}}</p>
+      <div class="content">
+        <div class="section reveal">
+          <h3>{{videoHeading}}</h3>
+          <p>{{video1}}</p>
+          <p>{{video2}}</p>
+        </div>
+        <div class="section reveal">
+          <h3>{{fanHeading}}</h3>
+          <p>{{fan1}}</p>
+          <p>{{fan2}}</p>
+        </div>
+        <div class="section reveal">
+          <h3>{{requestsHeading}}</h3>
+          <ul class="rules">
+            <li>{{rule1}}</li>
+            <li>{{rule2}}</li>
+            <li>{{rule3}}</li>
+          </ul>
+          <p>{{rulesNote}}</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="page">
+      <h2 class="heading reveal">{{navAbout}}</h2>
+      <p class="lead reveal">{{aboutLead}}</p>
+      <div class="content">
+        <div class="section reveal">
+          <p>{{aboutBody}}</p>
+        </div>
+        <div class="section reveal">
+          <h3>{{historyHeading}}</h3>
+          <dl class="history">
+            <dt>2026</dt><dd>{{history2026}}</dd>
+            <dt>2021</dt><dd>{{history2021}}</dd>
+            <dt>2020</dt><dd>{{history2020}}</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section id="links" class="page">
+      <h2 class="heading reveal">{{navLinks}}</h2>
+      <p class="lead reveal">{{linksLead}}</p>
+      <div class="links reveal">
+        <a href="https://x.com/zyunizyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-x" aria-hidden="true"></i>X</span><span class="arrow">↗</span></a>
+        <a href="https://gamerush.jp/u/zyunizyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-gamepad" aria-hidden="true"></i>GameRush</span><span class="arrow">↗</span></a>
+        <a href="https://www.youtube.com/@zyunizyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-youtube" aria-hidden="true"></i>YouTube</span><span class="arrow">↗</span></a>
+        <a href="https://github.com/zyunia428" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-github" aria-hidden="true"></i>GitHub</span><span class="arrow">↗</span></a>
+        <a href="https://ofuse.me/zyuniazyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-heart" aria-hidden="true"></i>OFUSE</span><span class="arrow">↗</span></a>
+      </div>
+    </section>
+
+    <section id="contact" class="page">
+      <h2 class="heading reveal">{{navContact}}</h2>
+      <p class="lead reveal">{{contactLead}}</p>
+      <div class="links reveal">
+        <a href="https://x.com/zyunizyunia" target="_blank" rel="noopener noreferrer"><span class="link-label"><i class="icon icon-x" aria-hidden="true"></i>{{xDm}}</span><span class="arrow">↗</span></a>
+        <a href="mailto:zyuniagamedev@gmail.com"><span class="link-label"><i class="icon icon-mail" aria-hidden="true"></i>zyuniagamedev@gmail.com</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <span>© ZyuniaStudio</span>
+    <span>{{siteName}}</span>
+  </footer>
+</body>
+</html>

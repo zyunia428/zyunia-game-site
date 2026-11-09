@@ -92,9 +92,20 @@ function initReveal() {
   });
 }
 
+function initLanguageMenu() {
+  const menu = document.getElementById('lang');
+  document.addEventListener('click', (event) => {
+    if (!menu.contains(event.target)) menu.open = false;
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') menu.open = false;
+  });
+}
+
 function init() {
   measureHeader();
   initReveal();
+  initLanguageMenu();
 
   const linkFromHash = navLinks.find((link) => link.hash === location.hash);
   setActive(linkFromHash ?? linkForScrollPosition());

@@ -28,6 +28,8 @@ body {
   font: 14px/1.9 "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
+:root[lang="zh-Hans"] body { font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; }
+:root[lang="ko"] body { font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
 
 a { color: inherit; text-decoration: none; }
 p { margin: 0 0 13px; }
@@ -42,6 +44,7 @@ p { margin: 0 0 13px; }
 .icon-heart::before { content: "\f004"; }
 .icon-play::before { content: "\f04b"; }
 .icon-mail::before { content: "\f0e0"; }
+.icon-globe::before { content: "\f0ac"; }
 .icon-x::before, .icon-youtube::before, .icon-github::before { font-family: "Icons Brands"; font-weight: 400; }
 .icon-x::before { content: "\e61b"; }
 .icon-youtube::before { content: "\f167"; }
@@ -79,6 +82,17 @@ p { margin: 0 0 13px; }
   transform-origin: left;
   transition: transform .3s var(--ease), opacity .2s ease;
 }
+
+/* Language menu */
+.lang { position: relative; flex-shrink: 0; }
+.lang summary { display: flex; align-items: center; gap: 4px; padding: 5px 9px; border: 1px solid var(--line); border-radius: 4px; color: #666; font-size: 12px; white-space: nowrap; cursor: pointer; list-style: none; transition: border-color .2s ease, color .2s ease; }
+.lang summary::-webkit-details-marker { display: none; }
+.lang summary:hover, .lang[open] summary { border-color: #999; color: var(--ink); }
+.lang-menu { position: absolute; right: 0; top: calc(100% + 6px); display: grid; min-width: 130px; padding: 5px; background: #fff; border: 1px solid var(--line); border-radius: 5px; box-shadow: 0 8px 22px rgba(0, 0, 0, .12); animation: lang-open .16s var(--ease); }
+.lang-menu a { padding: 5px 10px; border-radius: 3px; font-size: 13px; }
+.lang-menu a:hover { background: #f4f4f4; }
+.lang-menu a[aria-current] { font-weight: 700; }
+@keyframes lang-open { from { opacity: 0; transform: translateY(-4px); } }
 
 /* Layout */
 .main { padding-block: 56px 90px; }
@@ -132,15 +146,20 @@ a.game:hover .status.play .icon { transform: translateX(2px); }
 .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s var(--ease) var(--delay, 0s), transform .55s var(--ease) var(--delay, 0s); }
 .js .reveal.is-visible { opacity: 1; transform: none; }
 
-@media (max-width: 730px) {
-  .wrap { padding-inline: 20px; }
-  .header-inner { display: block; padding-top: 12px; }
+@media (max-width: 980px) {
+  .header-inner { display: block; position: relative; padding-top: 12px; }
   .brand-logo { width: 46px; height: 46px; }
   .brand-text { font-size: 20px; }
   .nav { gap: 22px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
   .nav::-webkit-scrollbar { display: none; }
   .nav a { flex-shrink: 0; font-size: 12px; }
   .nav-indicator { bottom: 7px; }
+  .lang { position: absolute; top: 19px; right: 30px; }
+}
+
+@media (max-width: 730px) {
+  .wrap { padding-inline: 20px; }
+  .lang { right: 20px; }
   .main { padding-block: 38px 65px; }
   .page + .page { margin-top: 54px; padding-top: 42px; }
   .heading { font-size: 31px; }
