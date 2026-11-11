@@ -90,13 +90,38 @@ async function fetchText(url) {
   return response.text();
 }
 
+/** Only https images on GameRush's own CDN are downloaded. */
+export function isAllowedImageUrl(url) {
+  let parsed;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return false;
+  }
+  return parsed.protocol === 'https:' && !parsed.port && parsed.hostname.endsWith('.g-rush.org');
+}
+
+/** Checks the RIFF....WEBP file signature. */
+export function isWebp(bytes) {
+  return bytes.length >= 12 && bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WEBP';
+}
+
 async function downloadImage(url, filePath) {
-  const response = await fetch(url, { headers: { 'user-agent': USER_AGENT } });
+  if (!isAllowedImageUrl(url)) throw new Error(`Refusing to download an image from an unexpected host: ${url}`);
+  const response = await fetch(url, { headers: { 'user-agent': USER_AGENT }, redirect: 'error' });
   if (!response.ok) throw new Error(`GET ${url} failed with ${response.status}`);
-  const type = response.headers.get('content-type') ?? '';
-  if (type !== 'image/webp') throw new Error(`Unexpected image type "${type}" for ${url}`);
-  const bytes = Buffer.from(await response.arrayBuffer());
-  if (bytes.length > MAX_IMAGE_BYTES) throw new Error(`Image too large (${bytes.length} bytes): ${url}`);
+  const declaredLength = Number(response.headers.get('content-length') ?? 0);
+  if (declaredLength > MAX_IMAGE_BYTES) throw new Error(`Image too large (${declaredLength} bytes): ${url}`);
+
+  const chunks = [];
+  let received = 0;
+  for await (const chunk of response.body) {
+    received += chunk.length;
+    if (received > MAX_IMAGE_BYTES) throw new Error(`Image too large (over ${MAX_IMAGE_BYTES} bytes): ${url}`);
+    chunks.push(chunk);
+  }
+  const bytes = Buffer.concat(chunks);
+  if (!isWebp(bytes)) throw new Error(`Downloaded file is not a WebP image: ${url}`);
   await writeFile(filePath, bytes);
 }
 
@@ -112,6 +137,7 @@ export async function syncGames(rootDir) {
   for (const slug of slugs.filter((s) => !known.has(s))) {
     const meta = parseGameMeta(await fetchText(GAME_URL + slug));
     if (!meta) throw new Error(`Could not read the title or image of ${GAME_URL + slug}`);
+    if (!isAllowedImageUrl(meta.image)) throw new Error(`Unexpected image host for ${GAME_URL + slug}: ${meta.image}`);
     foundGames.push({ slug, title: meta.title, description: meta.description, imageUrl: meta.image, imagePath: `/img/gamerush-${slug}.webp` });
   }
 

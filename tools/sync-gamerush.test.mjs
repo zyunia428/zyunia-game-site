@@ -1,6 +1,22 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mergeGames, normalizeTitle, parseGameMeta, parseProfileSlugs } from './sync-gamerush.mjs';
+import { isAllowedImageUrl, isWebp, mergeGames, normalizeTitle, parseGameMeta, parseProfileSlugs } from './sync-gamerush.mjs';
+
+test('画像はGameRushのCDNのhttps URLだけを許可する', () => {
+  assert.equal(isAllowedImageUrl('https://5f06cd03.g-rush.org/assets/thumbnail.webp?v=1'), true);
+  assert.equal(isAllowedImageUrl('http://5f06cd03.g-rush.org/assets/thumbnail.webp'), false);
+  assert.equal(isAllowedImageUrl('https://g-rush.org.evil.example/x.webp'), false);
+  assert.equal(isAllowedImageUrl('https://evilg-rush.org/x.webp'), false);
+  assert.equal(isAllowedImageUrl('https://a.g-rush.org:8443/x.webp'), false);
+  assert.equal(isAllowedImageUrl('https://169.254.169.254/latest/meta-data'), false);
+  assert.equal(isAllowedImageUrl('not a url'), false);
+});
+
+test('WebPのファイル署名を確かめる', () => {
+  assert.equal(isWebp(Buffer.from('RIFF\x10\x00\x00\x00WEBPVP8 ', 'binary')), true);
+  assert.equal(isWebp(Buffer.from('<html><body>not an image</body>')), false);
+  assert.equal(isWebp(Buffer.from('RIFF')), false);
+});
 import { renderGameCards } from './build.mjs';
 
 const profileHtml = `
