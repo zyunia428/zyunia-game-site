@@ -110,6 +110,10 @@ p { margin: 0 0 13px; }
 .game { display: block; min-width: 0; }
 .art { aspect-ratio: 16 / 9; overflow: hidden; background: #f0f0ee; border: 1px solid var(--line); border-radius: 5px; transition: border-color .25s ease, box-shadow .25s ease; }
 .art img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .45s var(--ease); }
+.art-square { position: relative; }
+.art-square img { position: relative; object-fit: contain; }
+.art-square .art-backdrop { position: absolute; inset: 0; object-fit: cover; filter: blur(18px) brightness(.85); transform: scale(1.15); }
+a.game:hover .art-square .art-backdrop { transform: scale(1.15); }
 a.game:hover .art { border-color: #999; box-shadow: 0 8px 22px rgba(0, 0, 0, .14); }
 a.game:hover .art img { transform: scale(1.035); }
 a.game:hover h3 { text-decoration: underline; text-underline-offset: 3px; }

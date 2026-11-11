@@ -1,0 +1,82 @@
+{
+  "games": [
+    {
+      "slug": "yJ9JFMc",
+      "title": "イカレタイレブン",
+      "image": "/img/ikareta.webp",
+      "width": 720,
+      "height": 405,
+      "description": {
+        "ja": "ローグライク × サッカー。",
+        "en": "Roguelike × soccer.",
+        "zh": "Roguelike × 足球。",
+        "ko": "로그라이크 × 축구."
+      }
+    },
+    {
+      "slug": "gGlyAV8",
+      "title": "ONE SHOT CHAOS",
+      "image": "/img/one-shot-chaos.webp",
+      "width": 720,
+      "height": 405,
+      "description": {
+        "ja": "一発ですべてを壊せる爽快パズル。",
+        "en": "A satisfying puzzle game where one shot can destroy everything.",
+        "zh": "一发摧毁一切的爽快解谜游戏。",
+        "ko": "한 방으로 모든 것을 부수는 통쾌한 퍼즐 게임."
+      }
+    },
+    {
+      "slug": "GZwhcbc",
+      "title": "60秒無双サバイバー",
+      "image": "/img/60-survivor.webp",
+      "width": 720,
+      "height": 405,
+      "description": {
+        "ja": "60秒で最強を目指すサバイバーゲーム。",
+        "en": "A survivor game where you aim for the top in 60 seconds.",
+        "zh": "在 60 秒内冲击最强的生存游戏。",
+        "ko": "60초 안에 최강을 노리는 서바이버 게임."
+      }
+    },
+    {
+      "slug": "4zoyW6a",
+      "title": "古古古米、炊けました",
+      "image": "/img/kokokomai.webp",
+      "width": 1280,
+      "height": 720,
+      "description": {
+        "ja": "備蓄の古古古米を、土鍋で新米みたいに炊けるゲーム。",
+        "en": "Cook stockpiled old rice in a clay pot until it tastes freshly harvested.",
+        "zh": "用砂锅把储备的陈米煮出新米味道的游戏。",
+        "ko": "비축해 둔 묵은쌀을 뚝배기로 햅쌀처럼 지어 내는 게임."
+      }
+    },
+    {
+      "slug": null,
+      "title": "忘却の塔",
+      "image": "/img/tower.webp",
+      "width": 960,
+      "height": 540,
+      "description": {
+        "ja": "忘れれば忘れるほど強くなる、ヴァンサバライクな見下ろし型アクション。",
+        "en": "A top-down, Vampire Survivors-like action game where the more you forget, the stronger you get.",
+        "zh": "遗忘越多，变得越强。类吸血鬼幸存者的俯视角动作游戏。",
+        "ko": "잊으면 잊을수록 강해지는 뱀파이어 서바이버류 탑다운 액션 게임."
+      }
+    },
+    {
+      "slug": null,
+      "title": "ハクスラでいいんだよ",
+      "image": "/img/hakusura.webp",
+      "width": 960,
+      "height": 540,
+      "description": {
+        "ja": "「これでいいんだよ」を詰め込んだ王道ハクスラ。",
+        "en": "A classic hack-and-slash packed with everything that makes you say, \"Yeah, this is what I wanted.\"",
+        "zh": "塞满了“要的就是这个”的王道刷宝游戏。",
+        "ko": "\"바로 이거지\"를 가득 담은 정통 핵 앤 슬래시."
+      }
+    }
+  ]
+}

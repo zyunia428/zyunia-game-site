@@ -1,0 +1,39 @@
+name: Sync GameRush games
+
+on:
+  schedule:
+    - cron: "0 */12 * * *" # 09:00 and 21:00 JST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-gamerush
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test
+        run: node --test tools/sync-gamerush.test.mjs
+      - name: Sync
+        run: node tools/sync-gamerush.mjs
+      - name: Commit and push
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          # Reuse the repository owner's identity from history so Vercel accepts the deployment.
+          git config user.name "$(git log -1 --format=%an)"
+          git config user.email "$(git log -1 --format=%ae)"
+          git add -A
+          git commit -m "Add new games from GameRush"
+          git push
