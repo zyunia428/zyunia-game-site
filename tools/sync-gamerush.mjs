@@ -101,6 +101,17 @@ export function isAllowedImageUrl(url) {
   return parsed.protocol === 'https:' && !parsed.port && parsed.hostname.endsWith('.g-rush.org');
 }
 
+/**
+ * Some games use a JPG (e.g. 640x360 thumb-og.jpg) as og:image, but GameRush also
+ * serves the square WebP thumbnail at /assets/thumbnail.webp on the same host.
+ */
+export function webpImageUrl(url) {
+  const parsed = new URL(url);
+  if (parsed.pathname.toLowerCase().endsWith('.webp')) return url;
+  parsed.pathname = '/assets/thumbnail.webp';
+  return parsed.href;
+}
+
 /** Checks the RIFF....WEBP file signature. */
 export function isWebp(bytes) {
   return bytes.length >= 12 && bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WEBP';
@@ -138,7 +149,7 @@ export async function syncGames(rootDir) {
     const meta = parseGameMeta(await fetchText(GAME_URL + slug));
     if (!meta) throw new Error(`Could not read the title or image of ${GAME_URL + slug}`);
     if (!isAllowedImageUrl(meta.image)) throw new Error(`Unexpected image host for ${GAME_URL + slug}: ${meta.image}`);
-    foundGames.push({ slug, title: meta.title, description: meta.description, imageUrl: meta.image, imagePath: `/img/gamerush-${slug}.webp` });
+    foundGames.push({ slug, title: meta.title, description: meta.description, imageUrl: webpImageUrl(meta.image), imagePath: `/img/gamerush-${slug}.webp` });
   }
 
   const { games, added, published } = mergeGames(data.games, foundGames);
