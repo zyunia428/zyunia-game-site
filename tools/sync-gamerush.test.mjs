@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { isAllowedImageUrl, isWebp, webpImageUrl, mergeGames, normalizeTitle, parseGameMeta, parseProfileSlugs } from './sync-gamerush.mjs';
+import { isAllowedImageUrl, isWebp, parseGameStats, webpImageUrl, mergeGames, normalizeTitle, parseGameMeta, parseProfileSlugs } from './sync-gamerush.mjs';
 
 test('画像はGameRushのCDNのhttps URLだけを許可する', () => {
   assert.equal(isAllowedImageUrl('https://5f06cd03.g-rush.org/assets/thumbnail.webp?v=1'), true);
@@ -30,7 +30,7 @@ test('WebPのファイル署名を確かめる', () => {
   assert.equal(isWebp(Buffer.from('<html><body>not an image</body>')), false);
   assert.equal(isWebp(Buffer.from('RIFF')), false);
 });
-import { renderGameCards } from './build.mjs';
+import { renderGameCards, sortGamesByPlays } from './build.mjs';
 
 const profileHtml = `
 <a class="group flex" href="/g/4zoyW6a?src=profile" data-discover="true"><img src="x"></a>
@@ -120,4 +120,80 @@ test('翻訳がないゲームは日本語の説明を表示し、HTMLをエス�
   assert.match(html, /<p class="desc">A &amp; &quot;B&quot;<\/p>/);
   assert.match(html, /<h3>&lt;b&gt;新作&lt;\/b&gt;<\/h3>/);
   assert.match(html, /class="art art-square"/);
+});
+
+/** Builds a page that embeds data the way GameRush does (React Router turbo-stream). */
+function streamPage(flat) {
+  const payload = JSON.stringify(JSON.stringify(flat));
+  return `<html><script>window.__reactRouterContext.streamController.enqueue(${payload});</script></html>`;
+}
+
+test('ゲームページの埋め込みデータからプレイ数とお気に入り数を読む', () => {
+  const flat = [
+    { _1: 2 }, 'game', { _3: 4, _5: 6, _7: 8 }, 'title', '上げ底、バレませんでした', 'likeCount', 9, 'commentCount', 1,
+    { _10: 11, _12: -5 }, 'playCount', 26062, 'sourceUrl',
+  ];
+  assert.deepEqual(parseGameStats(streamPage(flat)), { plays: 26062, likes: 9 });
+});
+
+test('プレイ数が読めないページはnullを返す', () => {
+  assert.equal(parseGameStats('<html><body>メンテナンス中</body></html>'), null);
+  assert.equal(parseGameStats(streamPage([{ _1: 2 }, 'likeCount', 3])), null);
+  assert.equal(parseGameStats(streamPage([{ _1: 2 }, 'playCount', 'たくさん', { _4: 5 }, 'likeCount', 3])), null);
+});
+
+const rankedGames = [
+  { slug: 'a', title: 'A' },
+  { slug: 'b', title: 'B' },
+  { slug: null, title: '開発中1' },
+  { slug: 'c', title: 'C' },
+  { slug: null, title: '開発中2' },
+  { slug: 'd', title: 'D' },
+];
+
+test('公開済みのゲームはプレイ数の多い順に並び、開発中のゲームは元の順で最後に来る', () => {
+  const stats = { a: { plays: 10, likes: 0 }, b: { plays: 300, likes: 1 }, c: { plays: 50, likes: 0 } };
+  assert.deepEqual(sortGamesByPlays(rankedGames, stats).map((g) => g.title), ['B', 'C', 'A', 'D', '開発中1', '開発中2']);
+});
+
+test('プレイ数が分からないゲームは、分かるゲームのあとに元の順で並び、元の配列は変えない', () => {
+  const snapshot = structuredClone(rankedGames);
+  assert.deepEqual(sortGamesByPlays(rankedGames, { d: { plays: 1, likes: 0 } }).map((g) => g.title), ['D', 'A', 'B', 'C', '開発中1', '開発中2']);
+  assert.deepEqual(rankedGames, snapshot);
+});
+
+const cardText = { play: 'Play', inDevelopment: 'In development', mostPlayed: 'Most played', playsLabel: '{count} plays', likesLabel: '{count} favorites' };
+
+test('カードにプレイ数とお気に入り数を桁区切りで表示し、いちばん上のカードにだけ人気の印を付ける', () => {
+  const games = [
+    { slug: 'b', title: '二番', image: '/img/b.webp', width: 720, height: 405, description: { ja: 'B' } },
+    { slug: 'a', title: '一番', image: '/img/a.webp', width: 720, height: 405, description: { ja: 'A' } },
+  ];
+  const stats = { b: { plays: 26062, likes: 9 }, a: { plays: 120, likes: 0 } };
+  const html = renderGameCards(games, 'en', cardText, { stats, locale: 'en' });
+  assert.match(html, /26,062 plays/);
+  assert.match(html, /9 favorites/);
+  assert.match(html, /120 plays/);
+  assert.equal(html.match(/Most played/g)?.length, 1);
+  assert.ok(html.indexOf('Most played') < html.indexOf('120 plays'));
+});
+
+test('プレイ数が0か分からないゲームには数も人気の印も出さない', () => {
+  const games = [{ slug: 'z', title: 'Z', image: '/img/z.webp', width: 720, height: 405, description: { ja: 'Z' } }];
+  for (const stats of [{}, { z: { plays: 0, likes: 0 } }]) {
+    const html = renderGameCards(games, 'en', cardText, { stats, locale: 'en' });
+    assert.doesNotMatch(html, /plays|Most played/);
+  }
+});
+
+test('英語のタイトルがあれば英語のページで使い、なければ日本語のタイトルを使う', () => {
+  const games = [
+    { slug: 'e', title: '忘却の塔', titles: { en: 'Tower of Oblivion' }, image: '/img/t.webp', width: 960, height: 540, description: { ja: '説明' } },
+    { slug: 'f', title: '日本語だけ', image: '/img/f.webp', width: 960, height: 540, description: { ja: '説明' } },
+  ];
+  const en = renderGameCards(games, 'en', cardText);
+  assert.match(en, /<h3>Tower of Oblivion<\/h3>/);
+  assert.match(en, /alt="Tower of Oblivion"/);
+  assert.match(en, /<h3>日本語だけ<\/h3>/);
+  assert.match(renderGameCards(games, 'ja', cardText), /<h3>忘却の塔<\/h3>/);
 });

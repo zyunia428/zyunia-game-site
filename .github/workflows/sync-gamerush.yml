@@ -35,5 +35,5 @@ jobs:
           git config user.name "$(git log -1 --format=%an)"
           git config user.email "$(git log -1 --format=%ae)"
           git add -A
-          git commit -m "Add new games from GameRush"
+          git commit -m "Update games and play counts from GameRush"
           git push

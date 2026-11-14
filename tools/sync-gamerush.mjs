@@ -1,4 +1,5 @@
-// Adds games newly published on GameRush to tools/games.json, then rebuilds the site.
+// Adds games newly published on GameRush to tools/games.json, saves every published
+// game's play and favorite counts to tools/stats.json, then rebuilds the site.
 // Add-only: existing entries are never rewritten, except that an in-development
 // entry gets its GameRush link once a game with the same title is published.
 // Usage: node tools/sync-gamerush.mjs
@@ -44,6 +45,42 @@ export function parseGameMeta(html) {
   const firstSentence = firstLine.match(/^.+?。/)?.[0];
   const description = firstLine.length > 60 && firstSentence ? firstSentence : firstLine;
   return { title, description, image };
+}
+
+/**
+ * GameRush pages embed their data as a React Router turbo-stream: a flat array where
+ * objects map "_<key index>" to "<value index>". Returns that array, or null.
+ */
+function readStreamData(html) {
+  const match = html.match(/streamController\.enqueue\(("(?:[^"\\]|\\.)*")\);/);
+  if (!match) return null;
+  try {
+    const flat = JSON.parse(JSON.parse(match[1]));
+    return Array.isArray(flat) ? flat : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Finds the value stored under the first object key named `name`. */
+function streamValue(flat, name) {
+  const keyIndex = flat.indexOf(name);
+  if (keyIndex === -1) return undefined;
+  const ref = `_${keyIndex}`;
+  const owner = flat.find((item) => item && typeof item === 'object' && !Array.isArray(item) && ref in item);
+  if (!owner) return undefined;
+  const valueIndex = owner[ref];
+  return valueIndex >= 0 ? flat[valueIndex] : undefined;
+}
+
+/** Reads the play count and the favorite count from a game page. */
+export function parseGameStats(html) {
+  const flat = readStreamData(html);
+  if (!flat) return null;
+  const plays = streamValue(flat, 'playCount');
+  const likes = streamValue(flat, 'likeCount');
+  if (!Number.isInteger(plays) || !Number.isInteger(likes)) return null;
+  return { plays, likes };
 }
 
 /** Compares titles loosely, so "ONE SHOT CHAOS!!" matches "ONE SHOT CHAOS". */
@@ -143,18 +180,30 @@ export async function syncGames(rootDir) {
   const slugs = parseProfileSlugs(await fetchText(PROFILE_URL));
   if (slugs.length === 0) throw new Error('No games found on the GameRush profile page; the page layout may have changed.');
 
+  const statsFile = join(rootDir, 'tools', 'stats.json');
+  const oldStatsJson = await readFile(statsFile, 'utf8').catch(() => '{}\n');
+
   const known = new Set(data.games.map((game) => game.slug).filter(Boolean));
   const foundGames = [];
-  for (const slug of slugs.filter((s) => !known.has(s))) {
-    const meta = parseGameMeta(await fetchText(GAME_URL + slug));
+  const stats = {};
+  for (const slug of slugs) {
+    const html = await fetchText(GAME_URL + slug);
+    const gameStats = parseGameStats(html);
+    if (!gameStats) throw new Error(`Could not read the play count of ${GAME_URL + slug}; the page layout may have changed.`);
+    stats[slug] = gameStats;
+    if (known.has(slug)) continue;
+    const meta = parseGameMeta(html);
     if (!meta) throw new Error(`Could not read the title or image of ${GAME_URL + slug}`);
     if (!isAllowedImageUrl(meta.image)) throw new Error(`Unexpected image host for ${GAME_URL + slug}: ${meta.image}`);
     foundGames.push({ slug, title: meta.title, description: meta.description, imageUrl: webpImageUrl(meta.image), imagePath: `/img/gamerush-${slug}.webp` });
   }
 
   const { games, added, published } = mergeGames(data.games, foundGames);
-  if (added.length === 0 && published.length === 0) {
-    console.log('No new games on GameRush.');
+  const statsJson = JSON.stringify(stats, null, 2) + '\n';
+  const gamesChanged = added.length > 0 || published.length > 0;
+  const statsChanged = statsJson !== oldStatsJson;
+  if (!gamesChanged && !statsChanged) {
+    console.log('No new games or play counts on GameRush.');
     return;
   }
   for (const found of foundGames) {
@@ -162,9 +211,11 @@ export async function syncGames(rootDir) {
       await downloadImage(found.imageUrl, join(rootDir, found.imagePath));
     }
   }
-  await writeFile(gamesFile, JSON.stringify({ ...data, games }, null, 2) + '\n');
+  if (gamesChanged) await writeFile(gamesFile, JSON.stringify({ ...data, games }, null, 2) + '\n');
+  if (statsChanged) await writeFile(statsFile, statsJson);
   for (const title of added) console.log(`Added: ${title}`);
   for (const title of published) console.log(`Now playable: ${title}`);
+  if (statsChanged) console.log(`Updated play counts for ${Object.keys(stats).length} games.`);
   await buildSite(rootDir);
 }
 
