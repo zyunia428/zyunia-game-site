@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { isAllowedImageUrl, isWebp, mergeGames, normalizeTitle, parseGameMeta, parseProfileSlugs } from './sync-gamerush.mjs';
+import { isAllowedImageUrl, isWebp, webpImageUrl, mergeGames, normalizeTitle, parseGameMeta, parseProfileSlugs } from './sync-gamerush.mjs';
 
 test('画像はGameRushのCDNのhttps URLだけを許可する', () => {
   assert.equal(isAllowedImageUrl('https://5f06cd03.g-rush.org/assets/thumbnail.webp?v=1'), true);
@@ -10,6 +10,19 @@ test('画像はGameRushのCDNのhttps URLだけを許可する', () => {
   assert.equal(isAllowedImageUrl('https://a.g-rush.org:8443/x.webp'), false);
   assert.equal(isAllowedImageUrl('https://169.254.169.254/latest/meta-data'), false);
   assert.equal(isAllowedImageUrl('not a url'), false);
+});
+
+test('WebPの画像URLはそのまま使う', () => {
+  const url = 'https://5f06cd03.g-rush.org/assets/thumbnail.webp?v=1';
+  assert.equal(webpImageUrl(url), url);
+});
+
+test('WebPでない画像URLは同じホストのthumbnail.webpに置き換える', () => {
+  assert.equal(
+    webpImageUrl('https://56c8e1f4.g-rush.org/assets/thumb-og.jpg?v=1794643446440'),
+    'https://56c8e1f4.g-rush.org/assets/thumbnail.webp?v=1794643446440',
+  );
+  assert.equal(webpImageUrl('https://56c8e1f4.g-rush.org/assets/thumb.PNG'), 'https://56c8e1f4.g-rush.org/assets/thumbnail.webp');
 });
 
 test('WebPのファイル署名を確かめる', () => {
