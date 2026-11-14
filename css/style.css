@@ -126,6 +126,11 @@ a.game:hover h3 { text-decoration: underline; text-underline-offset: 3px; }
 a.game:hover .status.play { background: #000; }
 a.game:hover .status.play .icon { transform: translateX(2px); }
 .desc { margin: 2px 0 0; color: #777; font-size: 13px; }
+.art { position: relative; }
+.badge { position: absolute; top: 8px; left: 8px; z-index: 1; padding: 3px 10px; border-radius: 99px; background: #e8a317; color: #1a1a1a; font-size: 11px; font-weight: 700; box-shadow: 0 1px 4px rgba(0, 0, 0, .25); }
+.stats { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 4px 0 0; color: #555; font-size: 12px; font-variant-numeric: tabular-nums; }
+.stats span { display: inline-flex; align-items: center; gap: 2px; }
+.stats .icon { font-size: 9px; color: #999; }
 
 /* Lists */
 .rules { padding-left: 19px; margin: 0 0 13px; }

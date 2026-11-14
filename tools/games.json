@@ -3,6 +3,9 @@
     {
       "slug": "yJ9JFMc",
       "title": "イカレタイレブン",
+      "titles": {
+        "en": "Crazy Eleven"
+      },
       "image": "/img/ikareta.webp",
       "width": 720,
       "height": 405,
@@ -29,6 +32,9 @@
     {
       "slug": "GZwhcbc",
       "title": "60秒無双サバイバー",
+      "titles": {
+        "en": "60-Second Rampage Survivor"
+      },
       "image": "/img/60-survivor.webp",
       "width": 720,
       "height": 405,
@@ -42,6 +48,9 @@
     {
       "slug": "4zoyW6a",
       "title": "古古古米、炊けました",
+      "titles": {
+        "en": "Old Old Old Rice, Cooked Fresh"
+      },
       "image": "/img/kokokomai.webp",
       "width": 1280,
       "height": 720,
@@ -55,16 +64,23 @@
     {
       "slug": "lT32jMu",
       "title": "上げ底、バレませんでした",
+      "titles": {
+        "en": "False Bottom: Nobody Noticed"
+      },
       "image": "/img/gamerush-lT32jMu.webp",
       "width": 720,
       "height": 720,
       "description": {
-        "ja": "弁当の底を指でなぞるだけ。1回30秒！"
+        "ja": "弁当の底を指でなぞるだけ。1回30秒！",
+        "en": "Just trace the bottom of a bento box with your finger. Each round takes 30 seconds!"
       }
     },
     {
       "slug": null,
       "title": "忘却の塔",
+      "titles": {
+        "en": "Tower of Oblivion"
+      },
       "image": "/img/tower.webp",
       "width": 960,
       "height": 540,
@@ -78,6 +94,9 @@
     {
       "slug": null,
       "title": "ハクスラでいいんだよ",
+      "titles": {
+        "en": "Just Give Me Hack and Slash"
+      },
       "image": "/img/hakusura.webp",
       "width": 960,
       "height": 540,
